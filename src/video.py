@@ -42,9 +42,10 @@ class PLVideo(Video):
 
         """ Инициализация реальными данными атрибутов  """
 
+        super().__init__(video_id)
+
         self.dict_of_video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails', id=video_id).execute()
 
-        self.video_id = video_id
         self.video_title = str(self.dict_of_video['items'][0]['snippet']['title'])
         self.video_url = f"https://youtu.be/gaoc9MPZ4bw/{self.video_id}"
         self.count_views = int(self.dict_of_video['items'][0]['statistics']['viewCount'])
