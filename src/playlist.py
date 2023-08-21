@@ -13,7 +13,6 @@ class PlayList():
 
         """ Инициализация атрибутов """
 
-       # self.playlists_video = self.get_service().playlistItems().list(playlistId=playlist_id, part='contentDetails, snippet', maxResults=50,).execute()
         self.playlists_videos = (PlayList.get_service().playlistItems().list(playlistId=playlist_id, part='contentDetails, snippet', maxResults=50, ).execute())
         self.playlists_video = PlayList.get_service().playlists().list(id=playlist_id, part='snippet', maxResults=50, ).execute()
 
