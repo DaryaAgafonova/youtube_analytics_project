@@ -10,13 +10,19 @@ class Video():
 
         """ Инициализация реальными данными атрибутов """
 
-        self.dict_of_video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails', id=video_id).execute()
-
         self.video_id = video_id
-        self.video_title = str(self.dict_of_video['items'][0]['snippet']['title'])
-        self.video_url = f"https://youtu.be/gaoc9MPZ4bw/{self.video_id}"
-        self.count_views = int(self.dict_of_video['items'][0]['statistics']['viewCount'])
-        self.count_likes = int(self.dict_of_video['items'][0]['statistics']['likeCount'])
+
+        try:
+            self.dict_of_video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails', id=video_id).execute()
+            self.title = str(self.dict_of_video['items'][0]['snippet']['title'])
+            self.video_url = f"https://www.youtube.com/watch?v={self.video_id}"
+            self.count_views = int(self.dict_of_video['items'][0]['statistics']['viewCount'])
+            self.like_count = int(self.dict_of_video['items'][0]['statistics']['likeCount'])
+        except IndexError:
+            self.title = None
+            self.count_views = None
+            self.like_count = None
+            self.video_url = f"https://www.youtube.com/watch?v={self.video_id}"
 
 
     @classmethod
@@ -31,7 +37,7 @@ class Video():
 
         """ Метод, который выводит название видео """
 
-        return self.video_title
+        return self.title
 
 
 class PLVideo(Video):
